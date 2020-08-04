@@ -60,6 +60,12 @@ if(emailkey!="" && passkey != ""){
 }
 
     }
+    public String EncodeString(String string) {
+        return string.replace(".", ",");
+    }
+    public String DecodeString(String string) {
+        return string.replace(",", ".");
+    }
 
     private void AllowAccess(final String pastas, final String slapt) {
 
@@ -68,9 +74,9 @@ if(emailkey!="" && passkey != ""){
         RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.child("Users").child(pastas).exists()){
-                    Users usersData = snapshot.child("Users").child(pastas).getValue(Users.class);
-                    if(usersData.getEmail().equals(pastas)){
+                if(snapshot.child("Users").child(EncodeString(pastas)).exists()){
+                    Users usersData = snapshot.child("Users").child(EncodeString(pastas)).getValue(Users.class);
+                    if(usersData.getEmail().equals(EncodeString(pastas))){
                         if(usersData.getPass().equals(slapt)){
                             Toast.makeText(MainActivity.this, "Sėkmingai prisijungta", Toast.LENGTH_SHORT).show();
                             loadingbar.setVisibility(View.GONE);

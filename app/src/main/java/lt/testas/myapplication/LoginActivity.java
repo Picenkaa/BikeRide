@@ -70,7 +70,17 @@ NotAdminlink.setOnClickListener(new View.OnClickListener() {
         parentDbname = "Users";
     }
 });
+
+
+
     }
+    public String EncodeString(String string) {
+        return string.replace(".", ",");
+    }
+    public String DecodeString(String string) {
+        return string.replace(",", ".");
+    }
+
             private void Loginuser() {
                 String pastas = innum.getText().toString();
                 String slapt = inpass.getText().toString();
@@ -103,9 +113,9 @@ if(checkBoxme.isChecked()){
         RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.child(parentDbname).child(pastas).exists()){
-                    Users usersData = snapshot.child(parentDbname).child(pastas).getValue(Users.class);
-                    if(usersData.getEmail().equals(pastas)){
+                if(snapshot.child(parentDbname).child(EncodeString(pastas)).exists()){
+                    Users usersData = snapshot.child(parentDbname).child(EncodeString(pastas)).getValue(Users.class);
+                    if(usersData.getEmail().equals(EncodeString(pastas))){
                         if(usersData.getPass().equals(slapt)){
 
                             if(parentDbname.equals("Admins")){
